@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 6.12.0
+
+dependencies:
+  pre:
+    - npm install -g npm@latest
+test:
+  override:
+    - npm test
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: store-grabber-api
