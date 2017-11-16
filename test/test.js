@@ -2,7 +2,7 @@ const assert = require("assert");
 const request = require("request");
 const app = require("../app.js");
 
-const base_url = "http://localhost:3000/";
+const url = "http://localhost:3000/";
 
 describe("Testing test system", () => {
     describe("true === true", () => {
