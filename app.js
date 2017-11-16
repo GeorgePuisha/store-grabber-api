@@ -3,7 +3,6 @@ const path = require("path");
 const app = express();
 
 const { Pool, Client } = require("pg");
-
 const connectionString = "postgres://user:password@host:port/database";
 
 const pool = new Pool({
@@ -11,4 +10,12 @@ const pool = new Pool({
     ssl: true
 });
 
-app.listen(process.env.PORT || 3000);
+const server = app.listen(process.env.PORT || 3000);
+
+app.get("/", (req, res) => {
+    res.send("Response");
+});
+
+module.exports.closeServer = () => {
+    server.close();
+};
