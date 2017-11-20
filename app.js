@@ -1,9 +1,16 @@
+const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");
-const app = express();
 const cors = require("cors");
+const app = express();
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 const routes = require("./server/routes/index");
+app.use("/api", routes)
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -14,11 +21,7 @@ app.use(function(req, res, next) {
 });
 app.use(cors());
 
-app.use("/api", routes)
-
 const server = app.listen(process.env.PORT || 3000);
-
-app.use(routes);
 
 module.exports.closeServer = () => {
     server.close();
