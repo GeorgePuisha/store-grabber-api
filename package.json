@@ -1,40 +1,40 @@
 {
-  "name": "store-grabber-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "nodemon app.js",
-    "test": "mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GeorgePuisha/store-grabber-api.git"
-  },
-  "keywords": [
-    "nodejs",
-    "express",
-    "postgres"
-  ],
-  "author": "GeorgePuisha",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GeorgePuisha/store-grabber-api/issues"
-  },
-  "homepage": "https://github.com/GeorgePuisha/store-grabber-api#readme",
-  "dependencies": {
-    "chai": "^4.1.2",
-    "express": "^4.16.2",
-    "mocha": "^4.0.1",
-    "nodemon": "^1.12.1",
-    "pg": "^7.4.0",
-    "pg-hstore": "^2.3.2",
-    "request": "^2.83.0",
-    "sequelize": "^4.22.8",
-    "sequelize-cli": "^3.1.0"
-  },
-  "engines": {
-    "node": "8.9.1",
-    "npm": "5.5.1"
-  }
+    "name": "store-grabber-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "heroku local local -p 3000",
+        "test": "mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GeorgePuisha/store-grabber-api.git"
+    },
+    "keywords": [
+        "nodejs",
+        "express",
+        "postgres"
+    ],
+    "author": "GeorgePuisha",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/GeorgePuisha/store-grabber-api/issues"
+    },
+    "homepage": "https://github.com/GeorgePuisha/store-grabber-api#readme",
+    "dependencies": {
+        "chai": "^4.1.2",
+        "express": "^4.16.2",
+        "mocha": "^4.0.1",
+        "nodemon": "^1.12.1",
+        "pg": "^7.4.0",
+        "pg-hstore": "^2.3.2",
+        "request": "^2.83.0",
+        "sequelize": "^4.22.8",
+        "sequelize-cli": "^3.1.0"
+    },
+    "engines": {
+        "node": "8.9.1",
+        "npm": "5.5.1"
+    }
 }

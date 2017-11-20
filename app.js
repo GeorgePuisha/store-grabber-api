@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-const routes = require("./routes/index");
+const routes = require("./server/routes/index");
 
 app.use("/api", routes)
 
