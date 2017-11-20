@@ -13,19 +13,8 @@ router.post("/login/", (req, res) => {
         }
     }).then((result) => {
         const user = result[0];
-        const created = result[1];
-        if (created) {
-            res.status(409);
-        }
         res.json(user);
     });
 });
-
-router.get('/all/', function(req, res) {
-    models.User.findAll({}).then(function(users) {
-        res.json(users);
-    });
-});
-
 
 module.exports = router;
