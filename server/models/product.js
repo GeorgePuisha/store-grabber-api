@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         UserId: DataTypes.INTEGER
     }, {
         classMethods: {
-            associate: function(models) {
+            associate(models) {
                 Product.belongsTo(models.User);
             }
         }

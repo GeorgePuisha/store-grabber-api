@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 const routes = require("./server/routes/index");
-app.use("/api", routes)
+app.use("/api", routes);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

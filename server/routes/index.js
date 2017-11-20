@@ -1,6 +1,6 @@
 const models = require("../models/index");
 const express = require("express");
-const router = express.Router();
+const router = new express.Router();
 
 router.post("/login/", (req, res) => {
     models.User.findOrCreate({
