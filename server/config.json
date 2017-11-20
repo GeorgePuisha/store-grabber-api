@@ -1,10 +1,12 @@
 {
     "development": {
-        "username": "root",
-        "password": null,
-        "database": "database_development",
-        "host": "127.0.0.1",
-        "dialect": "postgres"
+        "username": "ekvitvwrtyeuip",
+        "password": "567c1c2ddd4ccd24a8aacc1ee2762aa648d038724d58d231ed3928e6cf59faf1",
+        "database": "d3de5j66cd5172",
+        "host": "ec2-50-16-199-246.compute-1.amazonaws.com",
+        "dialect": "postgres",
+        "native": true,
+        "ssl": true
     },
     "test": {
         "username": "root",
