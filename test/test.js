@@ -2,7 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../app");
 const should = chai.should();
-const expect = chai.expect
+const expect = chai.expect;
 
 var config = require("../server/config.json")["test"];
 var Sequelize = require("sequelize");
