@@ -4,7 +4,7 @@ const server = require("../app");
 const should = chai.should();
 const expect = chai.expect;
 
-var config = require("../server/config.json")["test"];
+var config = require("../server/config.json")[process.env.NODE_ENV];
 var Sequelize = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL || config.DATABASE_URL, {
     dialect: "postgres",
