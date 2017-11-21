@@ -2,7 +2,7 @@ const models = require("../models/index");
 const express = require("express");
 const router = new express.Router();
 
-router.post("/login/", (req, res) => {
+router.post("/login", (req, res) => {
     models.User.findOrCreate({
         where: {
             email: req.body.email
