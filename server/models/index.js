@@ -2,7 +2,7 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var basename = path.basename(__filename);
-var config = require(__dirname + "../config.json")["test"];
+var config = require("../config.json")["test"];
 var db = {};
 
 const sequelize = new Sequelize(process.env.DATABASE_URL || config.DATABASE_URL, {
