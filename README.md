@@ -136,7 +136,6 @@ Some hints:
 * Use [pgAdmin 4](https://www.pgadmin.org/) to administrate Postgres database. [Ubuntu installation](https://romantelychko.com/blog/1585/);
 * Article about [Node+Postgres+Sequelize](http://mherman.org/blog/2015/10/22/node-postgres-sequelize/#.WhQ5FxZRVhE) integration.
 
-
 ## Built With
 
 * [Node.js](https://github.com/nodejs/node) - JavaScript runtime for server;
