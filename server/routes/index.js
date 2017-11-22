@@ -17,4 +17,9 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get("/search/:query", (req, res) => {
+    var query = req.params.query;
+    res.status(200);
+})
+
 module.exports = router;
