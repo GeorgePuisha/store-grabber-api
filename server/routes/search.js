@@ -1,6 +1,5 @@
 const express = require("express");
 const needle = require("needle");
-const cheerio = require("cheerio");
 
 const onliner = "https://catalog.api.onliner.by/search/products?query=";
 
