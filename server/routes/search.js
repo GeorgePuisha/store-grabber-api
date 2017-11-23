@@ -8,7 +8,7 @@ const reduceInformation = (product) => {
         key: product.key,
         name: product.name,
         description: product.description,
-        image: product.images.icon,
+        image: product.images.header,
         price: product.prices.price_min.amount,
         status: "active"
     };
