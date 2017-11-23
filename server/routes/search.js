@@ -25,8 +25,9 @@ const isAvailable = (product) => {
 const createResponse = (products) => {
     const response = [];
     for (let i = 0; i < products.length; i++) {
-        if (isActive(products[i]) && isAvailable(products[i]))
+        if (isActive(products[i]) && isAvailable(products[i])) {
             response.push(reduceInformation(products[i]));
+        }
     }
     return response;
 };
