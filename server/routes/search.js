@@ -23,7 +23,7 @@ const isAvailable = (product) => {
 };
 
 const createResponse = (products) => {
-    let response = [];
+    const response = [];
     for (let i = 0; i < products.length; i++) {
         if (isActive(products[i]) && isAvailable(products[i]))
             response.push(reduceInformation(products[i]));
@@ -32,7 +32,7 @@ const createResponse = (products) => {
 };
 
 const search = (req, resp) => {
-    const url = onliner + req.params.query
+    const url = onliner + req.params.query + "&page=" + req.params.page;
     needle.get(url, (err, res, body) => {
         resp.status(200).json(createResponse(res.body.products));
     });

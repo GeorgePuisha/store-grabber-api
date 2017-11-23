@@ -18,6 +18,6 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/search/:query", search);
+router.get("/search/:query/:page", search);
 
 module.exports = router;
