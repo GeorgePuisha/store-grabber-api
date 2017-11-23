@@ -6,7 +6,7 @@ const onliner = "https://catalog.api.onliner.by/search/products?query=";
 const reduceInformation = (product) => {
     return {
         key: product.key,
-        name: product.name,
+        name: product.extended_name,
         description: product.description,
         image: product.images.header,
         price: product.prices.price_min.amount,
