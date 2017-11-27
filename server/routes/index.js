@@ -23,6 +23,6 @@ router.get("/search/:query/last", onliner.lastPage);
 
 router.get("/search/:query/:page", onliner.search);
 
-router.get("/watch/:email/:key", watch.addToList);
+router.get("/watch/:email/:key", watch.addToWatched);
 
 module.exports = router;
