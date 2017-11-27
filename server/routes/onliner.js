@@ -35,7 +35,7 @@ const createResponse = (products) => {
 
 const search = (req, resp) => {
     const url = onliner + req.params.query + "&page=" + req.params.page;
-    needle.get(url, (err, res, body) => {
+    needle.get(url, (err, res) => {
         resp.status(200).json(createResponse(res.body.products));
     });
 };
