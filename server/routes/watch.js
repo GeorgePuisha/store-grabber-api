@@ -31,9 +31,7 @@ const addToWatched = (req, resp) => {
             where: {
                 email: req.params.email
             }
-        }).then((user) => {
-            findOrCreateWatched(user, product, resp);
-        })
+        }).then((user) => findOrCreateWatched(user, product, resp);)
     });
 };
 
