@@ -1,23 +1,35 @@
 const models = require("../models/index");
+const onliner = require("./onliner");
+const needle = require("needle");
 
-const onliner = "https://catalog.api.onliner.by/products/";
+const url = "https://catalog.api.onliner.by/products/";
 
-const addToList = (req, resp) => {
-    models.User.find({
-        where: {
-            email: req.params.email
-        }
-    }).then((user) => {
-        console.log(user.id)
-
-        models.Product.findOrCreate({
+const addToWatched = (req, resp) => {
+    needle.get(url + req.params.key, (err, res, body) => {
+        const product = onliner.reduceInformation(res.body);
+        models.User.find({
             where: {
-                UserId: user.id
+                email: req.params.email
             }
-        }).then((product) => {
-
+        }).then((user) => {
+            models.Watched.findOrCreate({
+                where: {
+                    key: product.key
+                },
+                defaults: {
+                    key: product.key,
+                    name: product.name,
+                    description: product.description,
+                    image: product.image,
+                    price: [product.price],
+                    status: product.status,
+                    userId: user.id
+                }
+            }).then((result) => {
+                resp.status(200).json(product);
+            });
         });
     });
 };
 
-module.exports.addToList = addToList;
+module.exports.addToWatched = addToWatched;

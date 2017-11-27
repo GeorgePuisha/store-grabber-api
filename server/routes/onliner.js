@@ -48,5 +48,7 @@ const lastPage = (req, resp) => {
     });
 };
 
+
+module.exports.reduceInformation = reduceInformation;
 module.exports.search = search;
 module.exports.lastPage = lastPage;
