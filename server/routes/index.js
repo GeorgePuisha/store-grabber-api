@@ -1,5 +1,5 @@
 const models = require("../models/index");
-const search = require("./search");
+const onliner = require("./onliner");
 const express = require("express");
 const router = new express.Router();
 
@@ -18,6 +18,8 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/search/:query/:page", search);
+router.get("/search/:query/last", onliner.lastPage);
+
+router.get("/search/:query/:page", onliner.search);
 
 module.exports = router;
