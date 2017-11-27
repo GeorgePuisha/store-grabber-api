@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         userId: DataTypes.INTEGER
     }, {
         classMethods: {
-            associate: function(models) {
+            associate: (models) => {
                 Watched.belongsTo(models.User);
             }
         }
