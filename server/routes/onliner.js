@@ -33,22 +33,19 @@ const createResponse = (products) => {
     return response;
 };
 
-
-
 const search = (req, resp) => {
     const url = onliner + req.params.query + "&page=" + req.params.page;
-    needle.get(url, (err, res, body) => {
+    needle.get(url, (err, res) => {
         resp.status(200).json(createResponse(res.body.products));
     });
 };
 
 const lastPage = (req, resp) => {
     const url = onliner + req.params.query;
-    needle.get(url, (err, res, body) => {
+    needle.get(url, (err, res) => {
         resp.status(200).json(res.body.page.last);
     });
 };
-
 
 module.exports.reduceInformation = reduceInformation;
 module.exports.search = search;
