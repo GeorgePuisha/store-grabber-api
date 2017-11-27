@@ -1,5 +1,6 @@
 const models = require("../models/index");
 const onliner = require("./onliner");
+const watch = require("./watch");
 const express = require("express");
 const router = new express.Router();
 
@@ -21,5 +22,7 @@ router.post("/login", (req, res) => {
 router.get("/search/:query/last", onliner.lastPage);
 
 router.get("/search/:query/:page", onliner.search);
+
+router.get("/watch/:email/:key", watch.addToList);
 
 module.exports = router;

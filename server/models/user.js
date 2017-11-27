@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         classMethods: {
             associate: function(models) {
-                User.hasMany(models.Todo);
+                User.hasMany(models.Watched);
             }
         }
     });
