@@ -10,6 +10,7 @@ const reduceInformation = (product) => {
         description: product.description,
         image: product.images.header,
         price: product.prices.price_min.amount,
+        url: product.html_url,
         status: "active"
     };
 };
