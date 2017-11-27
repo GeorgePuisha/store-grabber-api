@@ -42,7 +42,7 @@ const search = (req, resp) => {
 
 const lastPage = (req, resp) => {
     const url = onliner + req.params.query;
-    needle.get(url, (err, res, body) => {
+    needle.get(url, (err, res) => {
         resp.status(200).json(res.body.page.last);
     });
 };
