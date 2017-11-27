@@ -22,6 +22,7 @@ const addToWatched = (req, resp) => {
                     description: product.description,
                     image: product.image,
                     price: [product.price],
+                    url: product.url,
                     status: product.status,
                     userId: user.id
                 }

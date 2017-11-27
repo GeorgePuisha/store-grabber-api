@@ -23,6 +23,9 @@ module.exports = {
             price: {
                 type: Sequelize.ARRAY(Sequelize.STRING)
             },
+            url: {
+                type: Sequelize.STRING
+            },
             status: {
                 type: Sequelize.STRING
             },
