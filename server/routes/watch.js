@@ -22,7 +22,7 @@ const findOrCreateWatched = (user, product, resp) => {
     }).then(() => {
         resp.status(200);
     });
-}
+};
 
 const addToWatched = (req, resp) => {
     needle.get(url + req.params.key, (err, res, body) => {
