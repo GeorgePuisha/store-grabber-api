@@ -1,13 +1,4 @@
 {
-    "development": {
-        "username": "ekvitvwrtyeuip",
-        "password": "567c1c2ddd4ccd24a8aacc1ee2762aa648d038724d58d231ed3928e6cf59faf1",
-        "database": "d3de5j66cd5172",
-        "host": "ec2-50-16-199-246.compute-1.amazonaws.com",
-        "dialect": "postgres",
-        "native": true,
-        "ssl": true
-    },
     "test": {
         "DATABASE_URL": "postgres://ekvitvwrtyeuip:567c1c2ddd4ccd24a8aacc1ee2762aa648d038724d58d231ed3928e6cf59faf1@ec2-50-16-199-246.compute-1.amazonaws.com:5432/d3de5j66cd5172"
     },
