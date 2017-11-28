@@ -33,14 +33,14 @@ const createResponse = (products) => {
     return response;
 };
 
-const search = (req, resp) => {
+module.exports.search = (req, resp) => {
     const url = onliner + req.params.query + "&page=" + req.params.page;
     needle.get(url, (err, res) => {
         resp.status(200).json(createResponse(res.body.products));
     });
 };
 
-const lastPage = (req, resp) => {
+module.exports.lastPage = (req, resp) => {
     const url = onliner + req.params.query;
     needle.get(url, (err, res) => {
         resp.status(200).json(res.body.page.last);
@@ -48,5 +48,3 @@ const lastPage = (req, resp) => {
 };
 
 module.exports.reduceInformation = reduceInformation;
-module.exports.search = search;
-module.exports.lastPage = lastPage;

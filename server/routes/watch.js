@@ -24,7 +24,7 @@ const findOrCreateWatched = (user, product, resp) => {
     });
 };
 
-const addToWatched = (req, resp) => {
+module.exports.addToWatched = (req, resp) => {
     needle.get(url + req.params.key, (err, res, body) => {
         const product = onliner.reduceInformation(res.body);
         models.User.find({
@@ -35,4 +35,20 @@ const addToWatched = (req, resp) => {
     });
 };
 
-module.exports.addToWatched = addToWatched;
+const watchedByUserId = (user, resp) => {
+    models.Watched.findAll({
+        where: {
+            userId: user.id
+        }
+    }).then((watchedList) => {
+        resp.status(200).json(watchedList);
+    })
+};
+
+module.exports.getAllWatched = (req, resp) => {
+    models.User.find({
+        where: {
+            email: req.params.email
+        }
+    }).then((user) => watchedByUserId(user, resp));
+}
