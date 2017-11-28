@@ -56,4 +56,4 @@ typings/
 
 # dotenv environment variables file
 .env
-./server/config.json*
+server/config.json*
