@@ -25,11 +25,13 @@ const isAvailable = (product) => {
 
 const createResponse = (products) => {
     const response = [];
-    products.forEach((product) => {
-        if (isActive(product) && isAvailable(product)) {
-            response.push(reduceInformation(product));
-        }
-    });
+    if (products) {
+        products.forEach((product) => {
+            if (isActive(product) && isAvailable(product)) {
+                response.push(reduceInformation(product));
+            }
+        });
+    }
     return response;
 };
 

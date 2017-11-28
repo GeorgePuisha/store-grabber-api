@@ -4,6 +4,12 @@ const needle = require("needle");
 
 const url = "https://catalog.api.onliner.by/products/";
 
+const findUserByEmail = (email) => models.User.find({
+    where: {
+        email: email
+    }
+});
+
 const findOrCreateWatched = (user, product, resp) => {
     models.Watched.findOrCreate({
         where: {
@@ -25,13 +31,9 @@ const findOrCreateWatched = (user, product, resp) => {
 };
 
 module.exports.addToWatched = (req, resp) => {
-    needle.get(url + req.params.key, (err, res, body) => {
+    needle.get(url + req.params.key, (err, res) => {
         const product = onliner.reduceInformation(res.body);
-        models.User.find({
-            where: {
-                email: req.params.email
-            }
-        }).then((user) => findOrCreateWatched(user, product, resp));
+        findUserByEmail(req.params.email).then((user) => findOrCreateWatched(user, product, resp));
     });
 };
 
@@ -46,9 +48,15 @@ const watchedByUserId = (user, resp) => {
 };
 
 module.exports.getAllWatched = (req, resp) => {
-    models.User.find({
+    findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
+};
+
+module.exports.deleteFromWatched = (req, resp) => {
+    models.Watched.destroy({
         where: {
-            email: req.params.email
+            key: req.params.key
         }
-    }).then((user) => watchedByUserId(user, resp));
-}
+    }).then(() => {
+        resp.status(200);
+    });
+};

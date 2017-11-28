@@ -25,6 +25,8 @@ router.get("/search/:query/:page", onliner.search);
 
 router.get("/watch/:email/:key", watch.addToWatched);
 
+router.get("/unwatch/:key", watch.deleteFromWatched);
+
 router.get("/watched/:email", watch.getAllWatched);
 
 module.exports = router;
