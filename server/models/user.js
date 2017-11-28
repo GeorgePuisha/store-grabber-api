@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         nickname: DataTypes.STRING
     }, {
         classMethods: {
-            associate: function(models) {
+            associate: (models) => {
                 User.hasMany(models.Watched);
             }
         }
