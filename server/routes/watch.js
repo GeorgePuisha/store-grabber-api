@@ -6,7 +6,7 @@ const url = "https://catalog.api.onliner.by/products/";
 
 const findUserByEmail = (email) => models.User.find({
     where: {
-        email: email
+        email
     }
 });
 
@@ -45,7 +45,7 @@ const watchedByUserId = (user, resp) => {
     }).then((watchedList) => {
         watchedList.forEach((watched) => {
             watched.price = watched.price.pop();
-        })
+        });
         resp.status(200).json(watchedList);
 
     })
