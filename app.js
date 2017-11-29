@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const cron = require("node-cron");
-const price = require("./server/routes/price");
+const price = require("./server/controllers/price");
 const app = express();
 
 app.use(function(req, res, next) {
