@@ -47,7 +47,7 @@ const watchedByUserId = (user, resp) => {
     })
 };
 
-module.exports.getAllWatched = (req, resp) => {
+module.exports.getAllWatchedByEmail = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
 };
 
