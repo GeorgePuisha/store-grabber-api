@@ -7,32 +7,52 @@ const checkForAllWatched = () => {
     models.Watched.findAll()
         .then((watchedList) => {
             watchedList.forEach((watched) => {
-                checkPriceByKey(watched.key);
+                getPriceByKey(watched.key);
             });
         });
 };
 
-const checkPriceByKey = (key) => {
+const getPriceByKey = (key) => {
     needle.get(url + key, (err, res) => {
-        addPrice(key, res.body.prices.price_min.amount)
+        savePrice(key, res.body.prices.price_min.amount);
     });
 };
 
-const addPrice = (key, price) => {
+const savePrice = (key, price) => {
     models.Watched.find({
         where: {
             key: key
         }
     }).then((watched) => {
-        watched.price.push(price);
-        watched.update({
-            price: watched.price
-        }, {
-            where: {
-                key: key
-            }
-        });
+        addToPrices(watched, price);
     });
+};
+
+const addToPrices = (watched, price) => {
+    watched.price.push(price);
+    watched.update({
+        price: watched.price
+    }, {
+        where: {
+            key: key
+        }
+    }).then(() => comparePrices(watched.price, price));
+};
+
+const comparePrices = (oldPrice, newPrice, userId) => {
+    if (newPrice !== oldPrice) {
+        findUserById(userId).then((user) => sendEmail(oldPrice, newPrice, user.email));
+    }
+};
+
+const findUserById = (id) => models.User.find({
+    where: {
+        id: id
+    }
+});
+
+const sendEmail = (oldPrice, newPrice, email) => {
+    //TODO: send e-mail
 };
 
 module.exports.checkForAllWatched = checkForAllWatched;
