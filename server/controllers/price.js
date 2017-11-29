@@ -1,5 +1,6 @@
 const models = require("../models/index");
 const needle = require("needle");
+const mailer = require("./nodemailer");
 
 const url = "https://catalog.api.onliner.by/products/";
 
@@ -29,19 +30,20 @@ const savePrice = (key, price) => {
 };
 
 const addToPrices = (watched, price) => {
+    const oldPrice = watched.price.slice(-1)[0];
     watched.price.push(price);
     watched.update({
         price: watched.price
     }, {
         where: {
-            key: key
+            key: watched.key
         }
-    }).then(() => comparePrices(watched.price, price));
+    }).then(() => comparePrices(watched, oldPrice, price));
 };
 
-const comparePrices = (oldPrice, newPrice, userId) => {
-    if (newPrice !== oldPrice) {
-        findUserById(userId).then((user) => sendEmail(oldPrice, newPrice, user.email));
+const comparePrices = (watched, oldPrice, newPrice) => {
+    if (newPrice.toString() !== oldPrice.toString()) {
+        findUserById(watched.userId).then((user) => mailer.sendEmail(watched, oldPrice, newPrice, user.email));
     }
 };
 
@@ -50,9 +52,5 @@ const findUserById = (id) => models.User.find({
         id: id
     }
 });
-
-const sendEmail = (oldPrice, newPrice, email) => {
-    //TODO: send e-mail
-};
 
 module.exports.checkForAllWatched = checkForAllWatched;
