@@ -11,13 +11,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const mailOptions = (email, subject, text) => {
+const mailOptions = (to, subject, text) => {
     return {
         from: process.env.EMAIL_USER,
-        to: email,
-        subject: subject,
-        text: text
-    }
+        to,
+        subject,
+        text
+    };
 };
 
 const createText = (oldPrice, newPrice, productName) => {

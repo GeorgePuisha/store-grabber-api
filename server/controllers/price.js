@@ -4,29 +4,16 @@ const mailer = require("./nodemailer");
 
 const url = "https://catalog.api.onliner.by/products/";
 
-const checkForAllWatched = () => {
-    models.Watched.findAll()
-        .then((watchedList) => {
-            watchedList.forEach((watched) => {
-                getPriceByKey(watched.key);
-            });
-        });
-};
+const findUserById = (id) => models.User.find({
+    where: {
+        id
+    }
+});
 
-const getPriceByKey = (key) => {
-    needle.get(url + key, (err, res) => {
-        savePrice(key, res.body.prices.price_min.amount);
-    });
-};
-
-const savePrice = (key, price) => {
-    models.Watched.find({
-        where: {
-            key: key
-        }
-    }).then((watched) => {
-        addToPrices(watched, price);
-    });
+const comparePrices = (watched, oldPrice, newPrice) => {
+    if (newPrice.toString() !== oldPrice.toString()) {
+        findUserById(watched.userId).then((user) => mailer.sendEmail(watched, oldPrice, newPrice, user.email));
+    }
 };
 
 const addToPrices = (watched, price) => {
@@ -41,16 +28,29 @@ const addToPrices = (watched, price) => {
     }).then(() => comparePrices(watched, oldPrice, price));
 };
 
-const comparePrices = (watched, oldPrice, newPrice) => {
-    if (newPrice.toString() !== oldPrice.toString()) {
-        findUserById(watched.userId).then((user) => mailer.sendEmail(watched, oldPrice, newPrice, user.email));
-    }
+const savePrice = (key, price) => {
+    models.Watched.find({
+        where: {
+            key
+        }
+    }).then((watched) => {
+        addToPrices(watched, price);
+    });
 };
 
-const findUserById = (id) => models.User.find({
-    where: {
-        id: id
-    }
-});
+const getPriceByKey = (key) => {
+    needle.get(url + key, (err, res) => {
+        savePrice(key, res.body.prices.price_min.amount);
+    });
+};
+
+const checkForAllWatched = () => {
+    models.Watched.findAll()
+        .then((watchedList) => {
+            watchedList.forEach((watched) => {
+                getPriceByKey(watched.key);
+            });
+        });
+};
 
 module.exports.checkForAllWatched = checkForAllWatched;
