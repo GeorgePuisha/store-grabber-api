@@ -49,6 +49,16 @@ To run server, you should provide it with database connection string. I'm using 
 $ heroku config:set DATABASE_URL=postgres://user:password@host:port/database
 ```
 
+To send e-mails automatically, set Gmail account settings using two environmental variables - `EMAIL_USER` and `EMAIL_PASSWORD`.
+
+... and create `.env` file in root folder for development runs. `.env` file should contain:
+
+```
+DATABASE_URL="postgres://user:password@host:port/database",
+EMAIL_USER="development@gmail.com",
+EMAIL_PASSWORD="development"
+```
+
 Local server is running using Heroku. Server works on port `3000`.
 
 ### Database
@@ -140,7 +150,9 @@ Some hints:
 
 * [Node.js](https://github.com/nodejs/node) - JavaScript runtime for server;
 * [npm](https://github.com/npm/npm) - Package manager for JavaScript;
-* [Express.js](https://github.com/expressjs/express) - Framework for Node.js.
+* [Express.js](https://github.com/expressjs/express) - Framework for Node.js;
+* [Nodemailer](https://github.com/nodemailer/nodemailer) - Node.js framework to send e-mails;
+* [Node Cron](https://github.com/merencia/node-cron) - A simple cron-like job scheduler for Node.js.
 
 ### Deployment
 
