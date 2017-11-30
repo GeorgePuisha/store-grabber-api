@@ -13,7 +13,8 @@ const findUserByEmail = (email) => models.User.find({
 const findOrCreateWatched = (user, product, resp) => {
     models.Watched.findOrCreate({
         where: {
-            key: product.key
+            key: product.key,
+            userId: user.id
         },
         defaults: {
             key: product.key,
@@ -47,11 +48,10 @@ const watchedByUserId = (user, resp) => {
             watched.price = watched.price.pop();
         });
         resp.status(200).json(watchedList);
-
     })
 };
 
-module.exports.getAllWatchedByEmail = (req, resp) => {
+module.exports.getAllWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
 };
 
@@ -65,12 +65,18 @@ module.exports.deleteFromWatched = (req, resp) => {
     });
 };
 
-module.exports.getWatchedByKey = (req, resp) => {
+const watchedByUserIdAndKey = (user, key, resp) => {
     models.Watched.find({
         where: {
-            key: req.params.key
+            key,
+            userId: user.id
         }
     }).then((watched) => {
+        console.log(key);
         resp.status(200).json(watched);
     });
+}
+
+module.exports.getWatchedByKey = (req, resp) => {
+    findUserByEmail(req.params.email).then((user) => watchedByUserIdAndKey(user, req.params.key, resp));
 }
