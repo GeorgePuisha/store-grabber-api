@@ -55,14 +55,19 @@ module.exports.getAllWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
 };
 
-module.exports.deleteFromWatched = (req, resp) => {
+const destroyWatched = (user, key, resp) => {
     models.Watched.destroy({
         where: {
-            key: req.params.key
+            key,
+            userId: user.id
         }
     }).then(() => {
         resp.status(200);
     });
+}
+
+module.exports.deleteFromWatched = (req, resp) => {
+    findUserByEmail(req.params.email).then((user) => destroyWatched(user, req.params.key, resp));
 };
 
 const watchedByUserIdAndKey = (user, key, resp) => {

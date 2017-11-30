@@ -25,7 +25,7 @@ router.get("/search/:query/:page", onliner.search);
 
 router.get("/watch/:email/:key", watch.addToWatched);
 
-router.get("/unwatch/:key", watch.deleteFromWatched);
+router.get("/unwatch/:email/:key", watch.deleteFromWatched);
 
 router.get("/watched/all/:email", watch.getAllWatched);
 
