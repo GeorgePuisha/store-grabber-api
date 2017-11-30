@@ -27,6 +27,8 @@ router.get("/watch/:email/:key", watch.addToWatched);
 
 router.get("/unwatch/:key", watch.deleteFromWatched);
 
-router.get("/watched/:email", watch.getAllWatchedByEmail);
+router.get("/watched/all/:email", watch.getAllWatchedByEmail);
+
+router.get("/watched/:key", watch.getWatchedByKey);
 
 module.exports = router;

@@ -64,3 +64,13 @@ module.exports.deleteFromWatched = (req, resp) => {
         resp.status(200);
     });
 };
+
+module.exports.getWatchedByKey = (req, resp) => {
+    models.Watched.find({
+        where: {
+            key: req.params.key
+        }
+    }).then((watched) => {
+        resp.status(200).json(watched);
+    });
+}
