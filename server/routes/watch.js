@@ -72,7 +72,6 @@ const watchedByUserIdAndKey = (user, key, resp) => {
             userId: user.id
         }
     }).then((watched) => {
-        console.log(key);
         resp.status(200).json(watched);
     });
 };
