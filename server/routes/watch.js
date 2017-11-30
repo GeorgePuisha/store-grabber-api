@@ -64,7 +64,7 @@ const destroyWatched = (user, key, resp) => {
     }).then(() => {
         resp.status(200);
     });
-}
+};
 
 module.exports.deleteFromWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => destroyWatched(user, req.params.key, resp));
