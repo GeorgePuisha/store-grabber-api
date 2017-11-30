@@ -75,8 +75,8 @@ const watchedByUserIdAndKey = (user, key, resp) => {
         console.log(key);
         resp.status(200).json(watched);
     });
-}
+};
 
 module.exports.getWatchedByKey = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserIdAndKey(user, req.params.key, resp));
-}
+};
