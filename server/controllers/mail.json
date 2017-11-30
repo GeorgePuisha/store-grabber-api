@@ -1,0 +1,11 @@
+{
+    "subject": "Price changing notification",
+    "text": {
+        "greeting": "Hi!",
+        "intro": "\nWe remember that you were interested in ",
+        "price": ". So, the price has changed!",
+        "old": "\nOld price - ",
+        "new": ", new price - ",
+        "end": "\nPlease, visit Store Grabber or Onliner for more information.\n\nBest regards,\nGeorge Puisha from Store Grabber."
+    }
+}

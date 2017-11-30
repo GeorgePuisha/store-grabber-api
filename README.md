@@ -2,6 +2,7 @@
     <a href="https://codeclimate.com/github/GeorgePuisha/store-grabber-api/maintainability"><img src="https://api.codeclimate.com/v1/badges/5bb35d5b9602a3848000/maintainability"/></a>
     <a class="badge-align" href="https://www.codacy.com/app/GeorgePuisha/store-grabber-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GeorgePuisha/store-grabber-api&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/ddbcf467167540bdb02d55eb1d5c206d"/></a>
     <a href="https://circleci.com/gh/GeorgePuisha/store-grabber-api"><img src="https://circleci.com/gh/GeorgePuisha/store-grabber-api/tree/master.svg?style=shield" /></a>
+    <a href="https://travis-ci.org/GeorgePuisha/store-grabber-api"><img src="https://travis-ci.org/GeorgePuisha/store-grabber-api.svg?branch=master" /></a>
 </p>
 
 # Store Grabber
@@ -47,6 +48,16 @@ To run server, you should provide it with database connection string. I'm using 
 
 ```
 $ heroku config:set DATABASE_URL=postgres://user:password@host:port/database
+```
+
+To send e-mails automatically, set Gmail account settings using two environmental variables - `EMAIL_USER` and `EMAIL_PASSWORD`.
+
+... and create `.env` file in root folder for development runs. `.env` file should contain:
+
+```
+DATABASE_URL="postgres://user:password@host:port/database",
+EMAIL_USER="development@gmail.com",
+EMAIL_PASSWORD="development"
 ```
 
 Local server is running using Heroku. Server works on port `3000`.
@@ -140,7 +151,9 @@ Some hints:
 
 * [Node.js](https://github.com/nodejs/node) - JavaScript runtime for server;
 * [npm](https://github.com/npm/npm) - Package manager for JavaScript;
-* [Express.js](https://github.com/expressjs/express) - Framework for Node.js.
+* [Express.js](https://github.com/expressjs/express) - Framework for Node.js;
+* [Nodemailer](https://github.com/nodemailer/nodemailer) - Node.js framework to send e-mails;
+* [Node Cron](https://github.com/merencia/node-cron) - A simple cron-like job scheduler for Node.js.
 
 ### Deployment
 
