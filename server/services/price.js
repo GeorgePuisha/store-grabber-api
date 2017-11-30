@@ -12,7 +12,7 @@ const findUserById = (id) => models.User.find({
 
 const isPriceChanged = (oldPrice, newPrice) => {
     return newPrice.toString() !== oldPrice.toString();
-}
+};
 
 const addToPrices = (watched, price) => {
     const oldPrice = watched.price.slice(-1)[0];
