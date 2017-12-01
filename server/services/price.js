@@ -1,6 +1,6 @@
+const mailer = require("../controllers/nodemailer");
 const models = require("../models/index");
 const needle = require("needle");
-const mailer = require("../controllers/nodemailer");
 
 const url = "https://catalog.api.onliner.by/products/";
 
@@ -41,13 +41,8 @@ const savePrice = (key, price) => {
 
 const getPriceByKey = (key) => {
     needle.get(url + key, (err, res) => {
-        if (res.body.prices) {
-            savePrice(key, res.body.prices.price_min.amount);
-        } else {
-            console.log(res.body);
-        }
+        savePrice(key, res.body.prices.price_min.amount);
     });
-    console.log()
 };
 
 const checkAllWatched = () => {
