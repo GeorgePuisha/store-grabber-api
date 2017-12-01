@@ -24,29 +24,34 @@ const addToPrices = (watched, price) => {
             key: watched.key
         }
     }).then(() => {
-        if (isPriceChanged) {
+        if (isPriceChanged(oldPrice, price)) {
             findUserById(watched.userId).then((user) => mailer.sendEmail(watched, oldPrice, price, user.email));
         }
     });
 };
 
 const savePrice = (key, price) => {
-    models.Watched.find({
+    models.Watched.findAll({
         where: {
             key
         }
-    }).then((watched) => addToPrices(watched, price));
+    }).then((watchedList) => watchedList.forEach((watched) => addToPrices(watched, price)));
 };
 
 const getPriceByKey = (key) => {
-    needle.get(url + key, (err, res) => savePrice(key, res.body.prices.price_min.amount));
+    needle.get(url + key, (err, res) => {
+        if (res.body.prices) {
+            savePrice(key, res.body.prices.price_min.amount);
+        } else {
+            console.log(res.body);
+        }
+    });
+    console.log()
 };
 
 const checkAllWatched = () => {
     models.Watched.findAll()
-        .then((watchedList) => {
-            watchedList.forEach((watched) => getPriceByKey(watched.key));
-        });
+        .then((watchedList) => watchedList.forEach((watched, index) => setTimeout(() => getPriceByKey(watched.key), 1000 * index)));
 };
 
 module.exports.checkAllWatched = checkAllWatched;
