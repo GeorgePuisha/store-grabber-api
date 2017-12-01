@@ -22,6 +22,7 @@ const addToPrices = (watched, price) => {
     }, {
         where: {
             key: watched.key
+            id: watched.id
         }
     }).then(() => {
         if (isPriceChanged(oldPrice, price)) {
