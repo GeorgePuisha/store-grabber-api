@@ -2,8 +2,6 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const cron = require("node-cron");
-const price = require("./server/services/price");
 const app = express();
 
 app.use(function(req, res, next) {
@@ -24,10 +22,6 @@ app.use("/api", routes);
 app.use(cors());
 
 const server = app.listen(process.env.PORT || 3000);
-
-var task = cron.schedule("59 23 * * *", price.checkAllWatched, true);
-
-task.start();
 
 module.exports = app;
 
