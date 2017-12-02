@@ -11,7 +11,7 @@ const findUserByEmail = (email) => models.User.find({
 });
 
 const findOrCreateWatched = (user, product, resp) => {
-    models.Watched.findOrCreate({
+    models.Watched.findCreateFind({
         where: {
             key: product.key,
             userId: user.id
@@ -26,8 +26,8 @@ const findOrCreateWatched = (user, product, resp) => {
             status: product.status,
             userId: user.id
         }
-    }).then(() => {
-        resp.status(200);
+    }).then((watched) => {
+        resp.status(200).json();
     });
 };
 
@@ -62,7 +62,7 @@ const destroyWatched = (user, key, resp) => {
             userId: user.id
         }
     }).then(() => {
-        resp.status(200);
+        resp.status(200).json();
     });
 };
 
