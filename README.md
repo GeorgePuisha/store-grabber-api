@@ -139,6 +139,8 @@ heroku ps:scale web=1
 heroku open
 ```
 
+Application is using [Heroku Scheduler](https://elements.heroku.com/addons/scheduler) addon. To schedule a frequency and time for a job, open the Scheduler dashboard by finding the app in My Apps in Heroku dashboard.
+
 Some hints:
 
 * Make sure node & npm version are specified in `package.json`;
@@ -146,14 +148,15 @@ Some hints:
 * Easy start with Heroku ["Provision a database"](https://devcenter.heroku.com/articles/getting-started-with-nodejs#provision-a-database) article;
 * Use [pgAdmin 4](https://www.pgadmin.org/) to administrate Postgres database. [Ubuntu installation](https://romantelychko.com/blog/1585/);
 * Article about [Node+Postgres+Sequelize](http://mherman.org/blog/2015/10/22/node-postgres-sequelize/#.WhQ5FxZRVhE) integration.
+* You should verify your Heroku account in order to use Scheduler addon. It's free but is available only for checked users. [Heroku verification](https://devcenter.heroku.com/articles/account-verification)
 
 ## Built With
 
 * [Node.js](https://github.com/nodejs/node) - JavaScript runtime for server;
 * [npm](https://github.com/npm/npm) - Package manager for JavaScript;
 * [Express.js](https://github.com/expressjs/express) - Framework for Node.js;
-* [Nodemailer](https://github.com/nodemailer/nodemailer) - Node.js framework to send e-mails;
-* [Node Cron](https://github.com/merencia/node-cron) - A simple cron-like job scheduler for Node.js.
+* [Needle.js](https://github.com/tomas/needle) - HTTP request framework for Node.js;
+* [Nodemailer](https://github.com/nodemailer/nodemailer) - Node.js framework to send e-mails.
 
 ### Deployment
 
