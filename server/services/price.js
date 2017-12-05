@@ -1,4 +1,4 @@
-const mailer = require("../controllers/nodemailer");
+const amqp = require("../controllers/amqp");
 const models = require("../models/index");
 const needle = require("needle");
 
@@ -17,7 +17,7 @@ const isPriceChanged = (oldPrice, newPrice) => {
 const addToPrices = (watched, price) => {
     const oldPrice = watched.price.slice(-1)[0];
     watched.price.push(price);
-    watched.update({
+    models.Watched.update({
         price: watched.price
     }, {
         where: {
@@ -26,7 +26,12 @@ const addToPrices = (watched, price) => {
         }
     }).then(() => {
         if (isPriceChanged(oldPrice, price)) {
-            findUserById(watched.userId).then((user) => mailer.sendEmail(watched, oldPrice, price, user.email));
+            findUserById(watched.userId).then((user) => amqp.sendToQueue({
+                product: watched,
+                oldPrice,
+                newPrice: price,
+                user
+            }));
         }
     });
 };
@@ -41,7 +46,9 @@ const savePrice = (key, price) => {
 
 const getPriceByKey = (key) => {
     needle.get(url + key, (err, res) => {
-        savePrice(key, res.body.prices.price_min.amount);
+        if (res.body.prices) {
+            savePrice(key, res.body.prices.price_min.amount);
+        }
     });
 };
 
