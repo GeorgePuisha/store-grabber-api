@@ -2,6 +2,13 @@ const queue = "letters";
 const url = process.env.CLOUDAMQP_URL;
 const open = require("amqplib").connect(url);
 
+const createChannel = (mode, callback) => {
+    open.then((connection) => {
+        let createdChannel = connection.createChannel();
+        createdChannel = createdChannel.then((channel) => mode(channel, callback));
+    });
+}
+
 const read = (channel, callback) => {
     channel.assertQueue(queue);
     channel.consume(queue, (msg) => {
@@ -12,25 +19,11 @@ const read = (channel, callback) => {
     });
 };
 
-const getFromQueue = (callback) => {
-    open.then((connection) => {
-        let createdChannel = connection.createChannel();
-        createdChannel = createdChannel.then((channel) => read(channel, callback));
-    });
-};
-
 const write = (channel, information) => {
     channel.assertQueue(queue);
     channel.sendToQueue(queue, new Buffer(JSON.stringify(information)));
 };
 
-const sendToQueue = (information) => {
-    open.then((connection) => {
-        let createdChannel = connection.createChannel();
-        createdChannel = createdChannel.then((channel) => write(channel, information));
-    });
-};
+module.exports.getFromQueue = (callback) => createChannel(read, callback);
 
-module.exports.getFromQueue = getFromQueue;
-
-module.exports.sendToQueue = sendToQueue;
+module.exports.sendToQueue = (information) => createChannel(write, information);
