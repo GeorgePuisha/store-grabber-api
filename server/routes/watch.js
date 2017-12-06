@@ -1,3 +1,4 @@
+const redis = require("redis").createClient(process.env.REDIS_URL);
 const models = require("../models/index");
 const onliner = require("./onliner");
 const needle = require("needle");
@@ -27,6 +28,7 @@ const findOrCreateWatched = (user, product, resp) => {
             userId: user.id
         }
     }).then((watched) => {
+        redis.rpush([watched[0].dataValues.id, product.price]);
         resp.status(200).json();
     });
 };
@@ -55,19 +57,28 @@ module.exports.getAllWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
 };
 
-const destroyWatched = (user, key, resp) => {
+const destroyWatched = (watched, resp) => {
     models.Watched.destroy({
         where: {
-            key,
-            userId: user.id
+            id: watched.id
         }
     }).then(() => {
+        redis.del(watched.id);
         resp.status(200).json();
     });
 };
 
+const findAndDestroyWatched = (user, key, resp) => {
+    models.Watched.find({
+        where: {
+            key,
+            userId: user.id
+        }
+    }).then((watched) => destroyWatched(watched, resp));
+};
+
 module.exports.deleteFromWatched = (req, resp) => {
-    findUserByEmail(req.params.email).then((user) => destroyWatched(user, req.params.key, resp));
+    findUserByEmail(req.params.email).then((user) => findAndDestroyWatched(user, req.params.key, resp));
 };
 
 const watchedByUserIdAndKey = (user, key, resp) => {
