@@ -22,7 +22,7 @@ const findOrCreateWatched = (user, product, resp) => {
             name: product.name,
             description: product.description,
             image: product.image,
-            price: [product.price],
+            price: product.price,
             url: product.url,
             status: product.status,
             userId: user.id
