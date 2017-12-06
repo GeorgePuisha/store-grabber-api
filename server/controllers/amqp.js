@@ -7,7 +7,7 @@ const createChannel = (mode, callback) => {
         let createdChannel = connection.createChannel();
         createdChannel = createdChannel.then((channel) => mode(channel, callback));
     });
-}
+};
 
 const read = (channel, callback) => {
     channel.assertQueue(queue);
