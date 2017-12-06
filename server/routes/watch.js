@@ -46,9 +46,6 @@ const watchedByUserId = (user, resp) => {
             userId: user.id
         }
     }).then((watchedList) => {
-        watchedList.forEach((watched) => {
-            watched.price = watched.price.pop();
-        });
         resp.status(200).json(watchedList);
     })
 };
