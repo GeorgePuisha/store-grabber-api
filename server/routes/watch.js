@@ -1,3 +1,4 @@
+const redis = require("../controllers/redis");
 const models = require("../models/index");
 const onliner = require("./onliner");
 const needle = require("needle");
@@ -21,13 +22,14 @@ const findOrCreateWatched = (user, product, resp) => {
             name: product.name,
             description: product.description,
             image: product.image,
-            price: [product.price],
+            price: product.price,
             url: product.url,
             status: product.status,
             userId: user.id
         }
     }).then((watched) => {
-        resp.status(200).json();
+        redis.rpush([watched[0].dataValues.id, product.price]);
+        resp.json({});
     });
 };
 
@@ -44,10 +46,7 @@ const watchedByUserId = (user, resp) => {
             userId: user.id
         }
     }).then((watchedList) => {
-        watchedList.forEach((watched) => {
-            watched.price = watched.price.pop();
-        });
-        resp.status(200).json(watchedList);
+        resp.json(watchedList);
     })
 };
 
@@ -55,19 +54,35 @@ module.exports.getAllWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => watchedByUserId(user, resp));
 };
 
-const destroyWatched = (user, key, resp) => {
+const destroyWatched = (watched, resp) => {
     models.Watched.destroy({
+        where: {
+            id: watched.id
+        }
+    }).then(() => {
+        redis.del(watched.id);
+        resp.json({});
+    });
+};
+
+const findAndDestroyWatched = (user, key, resp) => {
+    models.Watched.find({
         where: {
             key,
             userId: user.id
         }
-    }).then(() => {
-        resp.status(200).json();
-    });
+    }).then((watched) => destroyWatched(watched, resp));
 };
 
 module.exports.deleteFromWatched = (req, resp) => {
-    findUserByEmail(req.params.email).then((user) => destroyWatched(user, req.params.key, resp));
+    findUserByEmail(req.params.email).then((user) => findAndDestroyWatched(user, req.params.key, resp));
+};
+
+const addPricesFromRedis = (watched, resp) => {
+    redis.lrange(watched.id, 0, -1, (error, reply) => {
+        watched.price = reply;
+        resp.json(watched);
+    });
 };
 
 const watchedByUserIdAndKey = (user, key, resp) => {
@@ -76,9 +91,7 @@ const watchedByUserIdAndKey = (user, key, resp) => {
             key,
             userId: user.id
         }
-    }).then((watched) => {
-        resp.status(200).json(watched);
-    });
+    }).then((watched) => addPricesFromRedis(watched, resp));
 };
 
 module.exports.getWatchedByKey = (req, resp) => {

@@ -21,7 +21,7 @@ module.exports = {
                 type: Sequelize.STRING
             },
             price: {
-                type: Sequelize.ARRAY(Sequelize.STRING)
+                type: Sequelize.STRING
             },
             url: {
                 type: Sequelize.STRING

@@ -38,14 +38,14 @@ const createResponse = (products) => {
 module.exports.search = (req, resp) => {
     const url = onliner + req.params.query + "&page=" + req.params.page;
     needle.get(url, (err, res) => {
-        resp.status(200).json(createResponse(res.body.products));
+        resp.json(createResponse(res.body.products));
     });
 };
 
 module.exports.lastPage = (req, resp) => {
     const url = onliner + req.params.query;
     needle.get(url, (err, res) => {
-        resp.status(200).json(res.body.page.last);
+        resp.json(res.body.page.last);
     });
 };
 
