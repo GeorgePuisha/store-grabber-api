@@ -29,7 +29,7 @@ const findOrCreateWatched = (user, product, resp) => {
         }
     }).then((watched) => {
         redis.rpush([watched[0].dataValues.id, product.price]);
-        resp.status(200).json();
+        resp.json({});
     });
 };
 
@@ -46,7 +46,7 @@ const watchedByUserId = (user, resp) => {
             userId: user.id
         }
     }).then((watchedList) => {
-        resp.status(200).json(watchedList);
+        resp.json(watchedList);
     })
 };
 
@@ -61,7 +61,7 @@ const destroyWatched = (watched, resp) => {
         }
     }).then(() => {
         redis.del(watched.id);
-        resp.status(200).json();
+        resp.json({});
     });
 };
 
@@ -78,15 +78,20 @@ module.exports.deleteFromWatched = (req, resp) => {
     findUserByEmail(req.params.email).then((user) => findAndDestroyWatched(user, req.params.key, resp));
 };
 
+const addPricesFromRedis = (watched, resp) => {
+    redis.lrange(watched.id, 0, -1, (error, reply) => {
+        watched.price = reply;
+        resp.json(watched);
+    });
+};
+
 const watchedByUserIdAndKey = (user, key, resp) => {
     models.Watched.find({
         where: {
             key,
             userId: user.id
         }
-    }).then((watched) => {
-        resp.status(200).json(watched);
-    });
+    }).then((watched) => addPricesFromRedis(watched, resp));
 };
 
 module.exports.getWatchedByKey = (req, resp) => {

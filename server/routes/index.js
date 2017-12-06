@@ -15,7 +15,7 @@ router.post("/login", (req, res) => {
         }
     }).then((result) => {
         const user = result[0];
-        res.status(200).json(user);
+        res.json(user);
     });
 });
 
