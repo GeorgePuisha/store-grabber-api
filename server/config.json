@@ -1,6 +1,7 @@
 {
     "test": {
-        "DATABASE_URL": "postgres://ekvitvwrtyeuip:567c1c2ddd4ccd24a8aacc1ee2762aa648d038724d58d231ed3928e6cf59faf1@ec2-50-16-199-246.compute-1.amazonaws.com:5432/d3de5j66cd5172"
+        "DATABASE_URL": "postgres://ekvitvwrtyeuip:567c1c2ddd4ccd24a8aacc1ee2762aa648d038724d58d231ed3928e6cf59faf1@ec2-50-16-199-246.compute-1.amazonaws.com:5432/d3de5j66cd5172",
+        "REDIS_URL": "redis://h:p599eacf6e66a7dd9a24d9ec4d6f07e91842f75f7c1f63cc3b9475e9beff0a95d@ec2-34-239-85-133.compute-1.amazonaws.com:23259"
     },
     "production": {
         "dialect": "postgres"

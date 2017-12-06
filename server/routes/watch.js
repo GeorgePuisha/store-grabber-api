@@ -1,4 +1,4 @@
-const redis = require("redis").createClient(process.env.REDIS_URL);
+const redis = require("../controllers/redis");
 const models = require("../models/index");
 const onliner = require("./onliner");
 const needle = require("needle");
