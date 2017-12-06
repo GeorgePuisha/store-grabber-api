@@ -1,3 +1,4 @@
+const redis = require("redis").createClient(process.env.REDIS_URL);
 const amqp = require("../controllers/amqp");
 const models = require("../models/index");
 const needle = require("needle");
@@ -31,6 +32,7 @@ const updateWatchedPrice = (watched, price) => {
 };
 
 const checkWatchedPrice = (watched, price) => {
+    redis.rpush([watched.id, price]);
     if (isPriceChanged(watched.price, price)) {
         updateWatchedPrice(watched, price);
     }
