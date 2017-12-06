@@ -14,47 +14,39 @@ const isPriceChanged = (oldPrice, newPrice) => {
     return newPrice.toString() !== oldPrice.toString();
 };
 
-const addToPrices = (watched, price) => {
-    const oldPrice = watched.price.slice(-1)[0];
-    watched.price.push(price);
+const updateWatchedPrice = (watched, price) => {
+    const oldPrice = watched.price;
     models.Watched.update({
-        price: watched.price
+        price
     }, {
         where: {
-            key: watched.key,
-            userId: watched.userId
+            id: watched.id
         }
-    }).then(() => {
-        if (isPriceChanged(oldPrice, price)) {
-            findUserById(watched.userId).then((user) => amqp.sendToQueue({
-                product: watched,
-                oldPrice,
-                newPrice: price,
-                user
-            }));
-        }
-    });
+    }).then(() => findUserById(watched.userId).then((user) => amqp.sendToQueue({
+        product: watched,
+        oldPrice,
+        newPrice: price,
+        user
+    })));
 };
 
-const savePrice = (key, price) => {
-    models.Watched.findAll({
-        where: {
-            key
-        }
-    }).then((watchedList) => watchedList.forEach((watched) => addToPrices(watched, price)));
+const checkWatchedPrice = (watched, price) => {
+    if (isPriceChanged(watched.price, price)) {
+        updateWatchedPrice(watched, price);
+    }
 };
 
-const getPriceByKey = (key) => {
-    needle.get(url + key, (err, res) => {
+const getWatchedPrice = (watched) => {
+    needle.get(url + watched.key, (err, res) => {
         if (res.body.prices) {
-            savePrice(key, res.body.prices.price_min.amount);
+            checkWatchedPrice(watched, res.body.prices.price_min.amount);
         }
     });
 };
 
 const checkAllWatched = () => {
     models.Watched.findAll()
-        .then((watchedList) => watchedList.forEach((watched, index) => setTimeout(() => getPriceByKey(watched.key), 1000 * index)));
+        .then((watchedList) => watchedList.forEach((watched, index) => setTimeout(() => getWatchedPrice(watched), 1000 * index)));
 };
 
 module.exports.checkAllWatched = checkAllWatched;
