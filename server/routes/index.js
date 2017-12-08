@@ -1,6 +1,7 @@
 const models = require("../models/index");
 const onliner = require("./onliner");
 const watch = require("./watch");
+const currency = require("./currency");
 const express = require("express");
 const router = new express.Router();
 
@@ -30,5 +31,7 @@ router.get("/unwatch/:email/:key", watch.deleteFromWatched);
 router.get("/watched/all/:email", watch.getAllWatched);
 
 router.get("/watched/:key/:email", watch.getWatchedByKey);
+
+router.put("/currency", currency.saveData);
 
 module.exports = router;
