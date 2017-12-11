@@ -22,11 +22,9 @@ app.use("/api", routes);
 
 app.use(cors());
 
-const server = app.listen(process.env.PORT || 3000);
-
 notifications.subscribeToNotifications(notifications.send);
 
-module.exports = app;
+module.exports.server = app.listen(process.env.PORT || 3000);
 
 module.exports.closeServer = () => {
     server.close();
