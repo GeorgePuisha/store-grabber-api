@@ -1,8 +1,11 @@
 const models = require("../models/index");
+const amqp = require("../controllers/amqp");
+
 const onliner = require("./onliner");
 const watch = require("./watch");
 const currency = require("./currency");
 const express = require("express");
+
 const router = new express.Router();
 
 router.post("/login", (req, res) => {
@@ -17,6 +20,7 @@ router.post("/login", (req, res) => {
     }).then((result) => {
         const user = result[0];
         res.json(user);
+        amqp.publishNotification("Successfully signed in!")
     });
 });
 

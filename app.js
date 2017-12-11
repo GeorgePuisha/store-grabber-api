@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const notifications = require("./server/workers/notifications");
 const app = express();
 
 app.use(function(req, res, next) {
@@ -22,6 +23,8 @@ app.use("/api", routes);
 app.use(cors());
 
 const server = app.listen(process.env.PORT || 3000);
+
+notifications.subscribeToNotifications(notifications.send);
 
 module.exports = app;
 
