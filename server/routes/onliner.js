@@ -1,5 +1,6 @@
 const express = require("express");
 const needle = require("needle");
+const amqp = require("../controllers/amqp");
 
 const onliner = "https://catalog.api.onliner.by/search/products?query=";
 
@@ -38,14 +39,28 @@ const createResponse = (products) => {
 module.exports.search = (req, resp) => {
     const url = onliner + req.params.query + "&page=" + req.params.page;
     needle.get(url, (err, res) => {
-        resp.json(createResponse(res.body.products));
+        if (!err) {
+            resp.json(createResponse(res.body.products));
+        } else {
+            amqp.publishNotification({
+                status: "error",
+                text: "An error has occured! Onliner.com seems to be offline"
+            });
+        }
     });
 };
 
 module.exports.lastPage = (req, resp) => {
     const url = onliner + req.params.query;
     needle.get(url, (err, res) => {
-        resp.json(res.body.page.last);
+        if (!err) {
+            resp.json(res.body.page.last);
+        } else {
+            amqp.publishNotification({
+                status: "error",
+                text: "An error has occured! Onliner.com seems to be offline"
+            });
+        }
     });
 };
 

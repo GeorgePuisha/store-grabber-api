@@ -43,7 +43,7 @@ const publish = (queue, channel, information) => {
     channel.assertExchange(ex, "fanout", {
         durable: false
     });
-    channel.publish(ex, queue, new Buffer(information));
+    channel.publish(ex, queue, new Buffer(JSON.stringify(information)));
 };
 
 module.exports.getFromLetterQueue = (callback) => createChannel(letterQueue, read, callback);

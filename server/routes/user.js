@@ -13,6 +13,9 @@ module.exports.login = (req, res) => {
     }).then((result) => {
         const user = result[0];
         res.json(user);
-        amqp.publishNotification("Successfully signed in!")
+        amqp.publishNotification({
+            status: "success",
+            text: "Successfully signed in!"
+        });
     });
 };

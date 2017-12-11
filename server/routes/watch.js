@@ -2,6 +2,7 @@ const redis = require("../controllers/redis");
 const models = require("../models/index");
 const onliner = require("./onliner");
 const needle = require("needle");
+const amqp = require("../controllers/amqp");
 
 const url = "https://catalog.api.onliner.by/products/";
 
@@ -30,6 +31,10 @@ const findOrCreateWatched = (user, product, resp) => {
     }).then((watched) => {
         redis.rpush([watched[0].dataValues.id, product.price]);
         resp.json({});
+        amqp.publishNotification({
+            status: "success",
+            text: "Add " + watched[0].name + " to watched!"
+        });
     });
 };
 
@@ -62,6 +67,10 @@ const destroyWatched = (watched, resp) => {
     }).then(() => {
         redis.del(watched.id);
         resp.json({});
+        amqp.publishNotification({
+            status: "alert",
+            text: "Removed " + watched.name + " from watched!"
+        });
     });
 };
 
