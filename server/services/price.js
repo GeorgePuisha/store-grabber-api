@@ -23,7 +23,7 @@ const updateWatchedPrice = (watched, price) => {
         where: {
             id: watched.id
         }
-    }).then(() => findUserById(watched.userId).then((user) => amqp.sendToQueue({
+    }).then(() => findUserById(watched.userId).then((user) => amqp.sendToLetterQueue({
         product: watched,
         oldPrice,
         newPrice: price,

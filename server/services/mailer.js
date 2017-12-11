@@ -51,7 +51,7 @@ const sendEmail = (data) => {
 };
 
 const emailDelivery = () => {
-    amqp.getFromQueue(sendEmail);
+    amqp.getFromLetterQueue(sendEmail);
 };
 
 module.exports.emailDelivery = emailDelivery;

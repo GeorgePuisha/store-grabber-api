@@ -24,6 +24,6 @@ const write = (channel, information) => {
     channel.sendToQueue(queue, new Buffer(JSON.stringify(information)));
 };
 
-module.exports.getFromQueue = (callback) => createChannel(read, callback);
+module.exports.getFromLetterQueue = (callback) => createChannel(read, callback);
 
-module.exports.sendToQueue = (information) => createChannel(write, information);
+module.exports.sendToLetterQueue = (information) => createChannel(write, information);
