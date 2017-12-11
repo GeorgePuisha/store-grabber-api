@@ -47,8 +47,9 @@ const getWatchedPrice = (watched) => {
 };
 
 const checkAllWatched = () => {
+    const timeout = 500;
     models.Watched.findAll()
-        .then((watchedList) => watchedList.forEach((watched, index) => setTimeout(() => getWatchedPrice(watched), 1000 * index)));
+        .then((watchedList) => watchedList.forEach((watched, index) => setTimeout(() => getWatchedPrice(watched), timeout * index)));
 };
 
 module.exports.checkAllWatched = checkAllWatched;
