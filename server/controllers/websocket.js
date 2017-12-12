@@ -1,4 +1,7 @@
-const app = require("../../app");
-const socket = require("socket.io");
+const app = require("express")();
+const server = require("http").Server(app);
+const socket = require("socket.io")(server);
 
-module.exports = socket(app.server);
+server.listen(3001);
+
+module.exports = socket;

@@ -68,7 +68,7 @@ const destroyWatched = (watched, resp) => {
         redis.del(watched.id);
         resp.json({});
         amqp.publishNotification({
-            status: "alert",
+            status: "warning",
             text: "Removed " + watched.name + " from watched!"
         });
     });
