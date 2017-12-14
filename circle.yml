@@ -12,4 +12,6 @@ deployment:
   staging:
     branch: master
     heroku:
-      appname: store-grabber-api
+      appname:
+          - store-grabber-api
+          - store-grabber-ws
