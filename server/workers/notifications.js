@@ -1,9 +1,17 @@
 const amqp = require("../controllers/amqp");
-const io = require("../controllers/websocket");
+const cors = require("cors");
+const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
-module.exports.send = (text) => {
+app.use(cors());
+
+server.listen(process.env.PORT || 3001);
+
+sendNotification = (text) => {
     console.log(text);
     io.emit("message", text);
 };
 
-module.exports.subscribeToNotifications = amqp.subscribeToNotifications;
+amqp.subscribeToNotifications(sendNotification);
