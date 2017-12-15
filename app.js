@@ -19,7 +19,10 @@ app.use(bodyParser.json());
 
 app.use("/api", routes);
 
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: "http://localhost:4200"
+}));
 
 module.exports.server = app.listen(process.env.PORT || 3000);
 
