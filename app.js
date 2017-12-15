@@ -21,7 +21,7 @@ app.use("/api", routes);
 
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:4200"
+    origin: "*"
 }));
 
 module.exports.server = app.listen(process.env.PORT || 3000);
