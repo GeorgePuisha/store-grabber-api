@@ -1,4 +1,4 @@
-api: node app.js
+web: node app.js
 ws: node server/workers/notifications.js
 local: nodemon app.js
 price: node tasks/check-price.js
