@@ -17,8 +17,7 @@ app.use(cors());
 
 server.listen(process.env.PORT || 3001);
 
-sendNotification = (text) => {
-    console.log(text);
+const sendNotification = (text) => {
     io.emit("message", text);
 };
 
