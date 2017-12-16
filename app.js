@@ -25,6 +25,8 @@ app.use(cors({
     origin: "*"
 }));
 
+module.exports.app = app;
+
 module.exports.server = app.listen(process.env.PORT || 3000);
 
 module.exports.closeServer = () => {
