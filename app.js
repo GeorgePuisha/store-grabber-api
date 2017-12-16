@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigin = "https://store-grabber.herokuapp.com";
 
-const solveCors(req, res, next) => {
+const solveCors = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", allowedOrigin);
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
