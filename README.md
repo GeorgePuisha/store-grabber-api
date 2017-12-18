@@ -174,6 +174,135 @@ Some hints:
 * [Chai](https://github.com/chaijs/chai) - Assertion library for Node.js;
 * [chai-http](https://github.com/chaijs/chai-http) - HTTP integration testing with Chai assertions.
 
+## Project Structure
+
+### Files & Folders
+
+```
+
+├── app.js
+├── circle.yml
+├── package.json
+├── package-lock.json
+├── Procfile
+├── README.md
+├── server
+│   ├── config.json
+│   ├── controllers
+│   │   ├── amqp.js
+│   │   └── redis.js
+│   ├── migrations
+│   │   ├── 20171120131951-create-user.js
+│   │   └── 20171206174100-create-watched.js
+│   ├── models
+│   │   ├── index.js
+│   │   ├── user.js
+│   │   └── watched.js
+│   ├── routes
+│   │   ├── currency.js
+│   │   ├── index.js
+│   │   ├── onliner.js
+│   │   └── watch.js
+│   └── services
+│       ├── mailer.js
+│       ├── mail.json
+│       └──price.js
+├── tasks
+│   ├── check-price.js
+│   └── send-email.js
+└── test
+    └── test.js
+```
+
+### Project Map
+
+Application uses standart triple-level web application design pattern.
+
+Levels:
+
+* Client level. User interaction with the system;
+* Server level. Interaction with clients, business logic, data access;
+* Database level. Data storage.
+
+```
+
+┌────────────┐      ┌────────────┐	    ┌────────────┐
+|			 |		|			 |		|			 |
+| 	Client   | <==> | 	Server   | <==> |  Database  |
+|			 |		|			 |		|			 |
+└────────────┘		└────────────┘	    └────────────┘
+
+```
+
+Levels are designed using different technologies:
+
+* Client. Angular 5 + Typescript;
+* Server. Built with Node.js using Express.js & Sequelize;
+* Database. Data storage is provided by PostgreSQL & Redis.
+
+```
+	Client				Server			   Database
+┌────────────┐      ┌────────────┐	    ┌────────────┐
+|			 |		|			 |		|			 |
+|			 |		|			 |		| PostgreSQL |
+|  Angular 5 | <==> |   Node.js	 | <==> |  	   +  	 |
+|			 |		|			 |		|	 Redis	 |
+|			 |		|			 |		|			 |
+└────────────┘		└────────────┘	    └────────────┘
+
+```
+
+Full structure with interactions & data passing will look like this:
+
+```
+
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║													Client													║
+║┌──────────────────────────────────┐┌──────────────────────────────────┐┌─────────────────────────────────┐║
+║|									||									||								   |║
+║|				Search				||				Currency			||			    Watched		   	   |║
+║|									||									||								   |║
+║└──────────────────────────────────┘└──────────────────────────────────┘└─────────────────────────────────┘║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+				 /\									  /\								  /\
+                 ||									  ||								  ||
+                 \/									  \/								  \/
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║													Server													║
+║ ┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐ ║
+║ |													Routes												  | ║
+║ └───────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║				 /\									  /\								  /\				║
+║                ||									  ||								  ||				║
+║                \/									  \/								  \/				║
+║┌──────────────────────────────────┐┌──────────────────────────────────┐┌─────────────────────────────────┐║
+║|			 onliner.js				||			 currency.js			||			   watch.js			   |║
+║| 									||									||								   |║
+║| * Calls Onliner API;				|| * Save user's preferences		|| * Create watched;		  	   |║
+║| * Obtains & reduces data;		|| 									|| * Delete watched;			   |║
+║| * Returns data to Client.		|| 			 						|| * Get one;					   |║
+║| 									|| 									|| * Get all;					   |║
+║└──────────────────────────────────┘└──────────────────────────────────┘└─────────────────────────────────┘║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+				 									  /\								  /\
+                 									  ||								  ||
+                 									  \/								  \/
+╔══════════════════════════════════╗╔══════════════════════════════════════════════════════════════════════╗
+║			   Scheduler		   ║║								Database							   ║
+║			   					   ║║┌─────────────────────────────────┐┌─────────────────────────────────┐║
+║ * mailer.js  					   ║║|				Redis			   ||			   Postgres			  |║
+║	Sends email-s using user's	   ║║|								   ||								  |║
+║	currency preferences.		   ║║| * Currency preferences;		   || * User information;			  |║
+║			   					   ║║|								   ||								  |║
+║ * price.js   					   ║║| * Price changes.				   || * Watched product information.  |║
+║	Calls to Onliner API & updates ║║|								   ||								  |║
+║	data if price has changed.	   ║║└─────────────────────────────────┘└─────────────────────────────────┘║
+╚══════════════════════════════════╝╚══════════════════════════════════════════════════════════════════════╝
+```
+
+
+
+
 ## Author
 
 * **George Puisha** - [GeorgePuisha](https://github.com/GeorgePuisha)
