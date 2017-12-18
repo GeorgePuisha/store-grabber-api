@@ -226,11 +226,11 @@ Levels:
 
 ```
 
-┌────────────┐      ┌────────────┐        ┌────────────┐
-|             |        |             |        |             |
-|     Client   | <==> |     Server   | <==> |  Database  |
-|             |        |             |        |             |
-└────────────┘        └────────────┘        └────────────┘
+┌────────────┐      ┌────────────┐      ┌────────────┐
+|            |      |            |      |            |
+|   Client   | <==> |   Server   | <==> |  Database  |
+|            |      |            |      |            |
+└────────────┘      └────────────┘      └────────────┘
 
 ```
 
@@ -242,13 +242,13 @@ Levels are designed using different technologies:
 
 ```
     Client                Server               Database
-┌────────────┐      ┌────────────┐        ┌────────────┐
-|             |        |             |        |             |
-|             |        |             |        | PostgreSQL |
-|  Angular 5 | <==> |   Node.js     | <==> |         +       |
-|             |        |             |        |     Redis     |
-|             |        |             |        |             |
-└────────────┘        └────────────┘        └────────────┘
+┌────────────┐      ┌────────────┐      ┌────────────┐
+|            |      |            |      |            |
+|            |      |            |      | PostgreSQL |
+|  Angular 5 | <==> |   Node.js  | <==> |      +     |
+|            |      |            |      |    Redis   |
+|            |      |            |      |            |
+└────────────┘      └────────────┘      └────────────┘
 
 ```
 
@@ -291,12 +291,12 @@ Full structure with interactions & data passing will look like this:
 ║               Scheduler          ║║                                Database                              ║
 ║                                  ║║┌─────────────────────────────────┐┌─────────────────────────────────┐║
 ║ * mailer.js                      ║║|               Redis             ||               Postgres          |║
-║    Sends email-s using user's    ║║|                                 ||                                 |║
-║    currency preferences.         ║║| * Currency preferences;         || * User information;             |║
+║   Sends email-s using user's     ║║|                                 ||                                 |║
+║   currency preferences.          ║║| * Currency preferences;         || * User information;             |║
 ║                                  ║║|                                 ||                                 |║
 ║ * price.js                       ║║| * Price changes.                || * Watched product information.  |║
-║    Calls to Onliner API & updates║║|                                 ||                                 |║
-║    data if price has changed.    ║║└─────────────────────────────────┘└─────────────────────────────────┘║
+║   Calls to Onliner API & updates ║║|                                 ||                                 |║
+║   data if price has changed.     ║║└─────────────────────────────────┘└─────────────────────────────────┘║
 ╚══════════════════════════════════╝╚══════════════════════════════════════════════════════════════════════╝
 ```
 
