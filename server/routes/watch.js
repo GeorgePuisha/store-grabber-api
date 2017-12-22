@@ -2,6 +2,7 @@ const redis = require("../controllers/redis");
 const models = require("../models/index");
 const onliner = require("./onliner");
 const needle = require("needle");
+const elasticsearch = require("../elasticsearch/index");
 
 const url = "https://catalog.api.onliner.by/products/";
 
@@ -36,6 +37,7 @@ const findOrCreateWatched = (user, product, resp) => {
 module.exports.addToWatched = (req, resp) => {
     needle.get(url + req.params.key, (err, res) => {
         const product = onliner.reduceInformation(res.body);
+        elasticsearch.addDocument(product);
         findUserByEmail(req.params.email).then((user) => findOrCreateWatched(user, product, resp));
     });
 };
