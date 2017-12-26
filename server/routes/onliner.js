@@ -1,5 +1,6 @@
 const express = require("express");
 const needle = require("needle");
+const elasticsearch = require("../elasticsearch/index");
 
 const onliner = "https://catalog.api.onliner.by/search/products?query=";
 
@@ -45,8 +46,19 @@ module.exports.search = (req, resp) => {
 module.exports.lastPage = (req, resp) => {
     const url = onliner + req.params.query;
     needle.get(url, (err, res) => {
-        resp.json(res.body.page.last);
+        if (res.body.page.last) {
+            resp.json(res.body.page.last);
+        } else {
+            resp.json(0);
+        }
     });
 };
 
 module.exports.reduceInformation = reduceInformation;
+
+const recommended = (req, resp) => {
+    //elasticsearch.getAllDocuments();
+    elasticsearch.getDocuments(req.params.query, resp);
+};
+
+module.exports.recommended = recommended;

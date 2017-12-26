@@ -11,14 +11,44 @@ const deleteIndex = () => client.indices.delete({
     index
 });
 
-const addDocument = (body, callback) => client.index({
+const addDocument = (body) => client.index({
     index,
     type,
     body
-}, () => callback());
+});
+
+const getDocuments = (query, response) => client.search({
+    index,
+    type,
+    body: {
+        query: {
+            match: {
+                description: query
+            }
+        }
+    }
+}).then((resp) => {
+    response.json(resp.hits.hits);
+});
+
+const getAllDocuments = () => client.search({
+    index,
+    type,
+    body: {
+        query: {
+            "match_all": {}
+        }
+    }
+}).then((resp) => {
+    console.log(resp.hits.hits);
+});
 
 module.exports.createIndex = createIndex;
 
 module.exports.deleteIndex = deleteIndex;
 
 module.exports.addDocument = addDocument;
+
+module.exports.getDocuments = getDocuments;
+
+module.exports.getAllDocuments = getAllDocuments;
