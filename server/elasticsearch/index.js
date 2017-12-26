@@ -13,6 +13,7 @@ const deleteIndex = () => client.indices.delete({
 
 const addDocument = (body) => client.index({
     index,
+    id: body.key,
     type,
     body
 });
