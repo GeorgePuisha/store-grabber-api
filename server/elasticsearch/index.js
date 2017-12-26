@@ -13,9 +13,9 @@ const deleteIndex = () => client.indices.delete({
 
 const addDocument = (body) => client.index({
     index,
-    id: body.key,
     type,
-    body
+    body,
+    id: body.key
 });
 
 const getDocuments = (query, response) => client.search({
@@ -44,6 +44,12 @@ const getAllDocuments = () => client.search({
     console.log(resp.hits.hits);
 });
 
+const deleteDocument = (key) => client.delete({
+    index,
+    type,
+    id: key
+});
+
 module.exports.createIndex = createIndex;
 
 module.exports.deleteIndex = deleteIndex;
@@ -53,3 +59,5 @@ module.exports.addDocument = addDocument;
 module.exports.getDocuments = getDocuments;
 
 module.exports.getAllDocuments = getAllDocuments;
+
+module.exports.deleteDocument = deleteDocument;

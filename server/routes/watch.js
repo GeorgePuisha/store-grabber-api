@@ -77,6 +77,7 @@ const findAndDestroyWatched = (user, key, resp) => {
 };
 
 module.exports.deleteFromWatched = (req, resp) => {
+    elasticsearch.deleteDocument(req.params.key);
     findUserByEmail(req.params.email).then((user) => findAndDestroyWatched(user, req.params.key, resp));
 };
 
