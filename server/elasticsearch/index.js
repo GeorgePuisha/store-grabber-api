@@ -17,8 +17,6 @@ const addDocument = (body) => client.index({
     index,
     type,
     body
-}).then((resp) => {
-    console.log(resp);
 });
 
 const getDocuments = (query, response) => client.search({
@@ -49,8 +47,6 @@ const getAllDocuments = () => client.search({
             "match_all": {}
         }
     }
-}).then((resp) => {
-    console.log(resp.hits.hits);
 });
 
 const deleteDocument = (email, key) => client.deleteByQuery({
@@ -73,8 +69,6 @@ const deleteDocument = (email, key) => client.deleteByQuery({
             }
         }
     }
-}, function(error, response) {
-    console.log(response);
 });
 
 module.exports.createIndex = createIndex;

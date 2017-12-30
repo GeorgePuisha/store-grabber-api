@@ -30,7 +30,6 @@ const calculateScore = (hits) => {
     let ratingFactor = 0;
 
     hits.forEach((hit) => {
-        console.log("Before: " + hit._score);
         countFactor = factor + (hit.count * countCoefficient);
         ratingFactor = factor + (hit._source.rating * ratingCoefficient);
         hit._score = hit._score * countFactor * ratingFactor;
@@ -41,9 +40,9 @@ const calculateScore = (hits) => {
 
 const scoreComparsion = (leftHit, rightHit) => {
     if (leftHit._score < rightHit._score) {
-        return -1;
-    } else if (leftHit._score > rightHit._score) {
         return 1;
+    } else if (leftHit._score > rightHit._score) {
+        return -1;
     }
     return 0;
 };
@@ -60,11 +59,6 @@ const reduceHits = (hits) => {
 
 module.exports.handleHits = (hits) => {
     let result = calculateScore(foldHits(hits));
-
-    result.forEach(hit => {
-        console.log(hit._source.name);
-        console.log(hit._score)
-    });
 
     return reduceHits(result);
 };
