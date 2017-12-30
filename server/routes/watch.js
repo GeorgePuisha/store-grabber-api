@@ -37,6 +37,7 @@ const findOrCreateWatched = (user, product, resp) => {
 module.exports.addToWatched = (req, resp) => {
     needle.get(url + req.params.key, (err, res) => {
         const product = onliner.reduceInformation(res.body);
+        product.email = req.params.email;
         elasticsearch.addDocument(product);
         findUserByEmail(req.params.email).then((user) => findOrCreateWatched(user, product, resp));
     });
@@ -77,7 +78,7 @@ const findAndDestroyWatched = (user, key, resp) => {
 };
 
 module.exports.deleteFromWatched = (req, resp) => {
-    elasticsearch.deleteDocument(req.params.key);
+    elasticsearch.deleteDocument(req.params.email, req.params.key);
     findUserByEmail(req.params.email).then((user) => findAndDestroyWatched(user, req.params.key, resp));
 };
 
