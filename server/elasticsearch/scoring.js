@@ -11,11 +11,11 @@ const foldHits = (hits) => {
         folded[hit._source.key].count++;
     });
 
-    for (key in folded) {
+    for (let key in folded) {
         if (folded.hasOwnProperty(key)) {
             result.push(folded[key]);
         }
-    };
+    }
 
     return result;
 };
@@ -50,7 +50,7 @@ const scoreComparsion = (leftHit, rightHit) => {
 const reduceHits = (hits) => {
     const amount = 3;
 
-    hits.sort(scoreComparsion)
+    hits.sort(scoreComparsion);
     if (hits.length >= amount) {
         return hits.slice(0, amount);
     }
