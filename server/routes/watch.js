@@ -36,8 +36,7 @@ const findOrCreateWatched = (user, product, resp) => {
 
 module.exports.addToWatched = (req, resp) => {
     needle.get(url + req.params.key, (err, res) => {
-        const product = onliner.reduceInformation(res.body);
-        product.email = req.params.email;
+        const product = onliner.reduceInformation(res.body, req.params.email);
         elasticsearch.addDocument(product);
         findUserByEmail(req.params.email).then((user) => findOrCreateWatched(user, product, resp));
     });

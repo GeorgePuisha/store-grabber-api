@@ -4,7 +4,7 @@ const elasticsearch = require("../elasticsearch/index");
 
 const onliner = "https://catalog.api.onliner.by/search/products?query=";
 
-const reduceInformation = (product) => {
+const reduceInformation = (product, email) => {
     return {
         key: product.key,
         name: product.extended_name,
@@ -12,6 +12,8 @@ const reduceInformation = (product) => {
         image: product.images.header,
         price: product.prices.price_min.amount,
         url: product.html_url,
+        rating: product.reviews.rating,
+        email,
         status: "active"
     };
 };

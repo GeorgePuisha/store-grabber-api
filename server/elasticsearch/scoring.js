@@ -22,16 +22,18 @@ const foldHits = (hits) => {
 
 const calculateScore = (hits) => {
     const factor = 1;
-    const countCoefficient = 0.01;
+    const countCoefficient = 0.1;
     const relevanceCoefficient = 0;
-    const ratingCoefficient = 0;
+    const ratingCoefficient = 0.01;
 
     let countFactor = 0;
     let ratingFactor = 0;
 
     hits.forEach((hit) => {
+        console.log("Before: " + hit._score);
         countFactor = factor + (hit.count * countCoefficient);
-        hit._score = hit._score * countFactor;
+        ratingFactor = factor + (hit._source.rating * ratingCoefficient);
+        hit._score = hit._score * countFactor * ratingFactor;
     });
 
     return hits;

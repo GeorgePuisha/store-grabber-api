@@ -33,7 +33,7 @@ const getDocuments = (query, response) => client.search({
                     "description",
                     "key"
                 ],
-                fuzziness: 2
+                fuzziness: "2"
             }
         }
     }
