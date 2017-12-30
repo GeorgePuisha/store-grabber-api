@@ -49,7 +49,7 @@ const watchedByUserId = (user, resp) => {
         }
     }).then((watchedList) => {
         resp.json(watchedList);
-    })
+    });
 };
 
 module.exports.getAllWatched = (req, resp) => {
