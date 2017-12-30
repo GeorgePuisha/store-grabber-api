@@ -49,8 +49,6 @@ const calculateScore = (hits) => {
 
     let countFactor = 0;
 
-    hits = foldHits(hits);
-
     hits.forEach((hit) => {
         countFactor = factor + (hit.count * countCoefficient);
         hit._score = hit._score * countFactor;
@@ -59,8 +57,27 @@ const calculateScore = (hits) => {
     return hits;
 };
 
+const scoreComparsion = (leftHit, rightHit) => {
+    if (leftHit._score < rightHit._score) {
+        return -1;
+    } else if (leftHit._score > rightHit._score) {
+        return 1;
+    }
+    return 0;
+};
+
+const reduceHits = (hits) => {
+    const amount = 3;
+
+    hits.sort(scoreComparsion)
+    if (hits.length >= amount) {
+        return hits.slice(0, amount);
+    }
+    return hits;
+};
+
 const handleHits = (hits) => {
-    result = calculateScore(hits);
+    result = calculateScore(foldHits(hits));
 
     result.forEach(hit => {
         console.log(hit._source.name);
@@ -68,7 +85,7 @@ const handleHits = (hits) => {
         console.log(hit._score)
     });
 
-    return result;
+    return reduceHits(result);
 };
 
 const getDocuments = (query, response) => client.search({
@@ -89,9 +106,9 @@ const getDocuments = (query, response) => client.search({
     }
 }).then((resp) => {
     resp.hits.hits.forEach(hit => {
-        console.log(hit._source.name);
+        //console.log(hit._source.name);
         //console.log(hit._source.email);
-        console.log(hit._score)
+        //console.log(hit._score)
         //console.log(hit);
     });
     response.json(handleHits(resp.hits.hits));
