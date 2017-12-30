@@ -24,7 +24,7 @@ const getDocuments = (query, response) => client.search({
     type,
     body: {
         query: {
-            multi_match: {
+            "multi_match": {
                 query,
                 fields: [
                     "name",
