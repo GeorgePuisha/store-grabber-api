@@ -80,9 +80,7 @@ const updateDocumentPrice = (watched, price) => client.updateByQuery({
                 key: watched.key
             }
         },
-        script: {
-            inline: "ctx._source.price = price"
-        }
+        script: "ctx._source.price = " + price
     }
 });
 
