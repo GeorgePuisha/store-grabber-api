@@ -86,6 +86,17 @@ const updateDocumentPrice = (watched, price) => client.updateByQuery({
     }
 });
 
+const updateDocumentDescription = (id, description) => client.update({
+    index,
+    type,
+    id,
+    body: {
+        doc: {
+            description
+        }
+    }
+});
+
 module.exports.createIndex = createIndex;
 
 module.exports.deleteIndex = deleteIndex;
@@ -99,3 +110,4 @@ module.exports.getAllDocuments = getAllDocuments;
 module.exports.deleteDocument = deleteDocument;
 
 module.exports.updateDocumentPrice = updateDocumentPrice;
+module.exports.updateDocumentDescription = updateDocumentDescription;
