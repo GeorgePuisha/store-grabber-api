@@ -1,5 +1,6 @@
 const redis = require("../controllers/redis");
 const amqp = require("../controllers/amqp");
+const elasticsearch = require("../elasticsearch/index");
 const models = require("../models/index");
 const needle = require("needle");
 
@@ -34,6 +35,7 @@ const updateWatchedPrice = (watched, price) => {
 const checkWatchedPrice = (watched, price) => {
     redis.rpush([watched.id, price]);
     if (isPriceChanged(watched.price, price)) {
+        elasticsearch.updateDocumentPrice(watched, price);
         updateWatchedPrice(watched, price);
     }
 };

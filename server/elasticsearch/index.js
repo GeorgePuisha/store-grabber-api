@@ -71,6 +71,21 @@ const deleteDocument = (email, key) => client.deleteByQuery({
     }
 });
 
+const updateDocumentPrice = (watched, price) => client.updateByQuery({
+    index,
+    type,
+    body: {
+        query: {
+            match: {
+                key: watched.key
+            }
+        },
+        script: {
+            inline: "ctx._source.price = price"
+        }
+    }
+});
+
 module.exports.createIndex = createIndex;
 
 module.exports.deleteIndex = deleteIndex;
@@ -82,3 +97,5 @@ module.exports.getDocuments = getDocuments;
 module.exports.getAllDocuments = getAllDocuments;
 
 module.exports.deleteDocument = deleteDocument;
+
+module.exports.updateDocumentPrice = updateDocumentPrice;
