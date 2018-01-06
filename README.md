@@ -283,21 +283,45 @@ Full structure with interactions & data passing will look like this:
 ║| * Returns data to Client.        ||                                  || * Get one;                      |║
 ║|                                  ||                                  || * Get all;                      |║
 ║└──────────────────────────────────┘└──────────────────────────────────┘└─────────────────────────────────┘║
+║                +                                                                                          ║
+║┌──────────────────────────────────┐                                                                       ║
+║|           scoring.js             |                                                                       ║
+║|                                  |                                                                       ║
+║| * Performs search in ES index;   |                                                                       ║
+║| * Provides custom scoring func;  |                                                                       ║
+║| * Returns most relevant watched. |                                                                       ║
+║|                                  |                                                                       ║
+║└──────────────────────────────────┘                                                                       ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
-                                                       /\                                  /\
-                                                       ||                                  ||
-                                                       \/                                  \/
-╔═══════════════════════════════════╗╔══════════════════════════════════════════════════════════════════════╗
-║               Scheduler           ║║                                Database                              ║
-║                                   ║║┌─────────────────────────────────┐┌─────────────────────────────────┐║
-║ * mailer.js                       ║║|              Redis              ||              Postgres           |║
-║   Sends email-s using user's      ║║|                                 ||                                 |║
-║   currency preferences.           ║║| * Currency preferences;         || * User information;             |║
-║                                   ║║|                                 ||                                 |║
-║ * price.js                        ║║| * Price changes.                || * Watched product information.  |║
-║   Calls to Onliner API & updates  ║║|                                 ||                                 |║
-║   data if price has changed.      ║║└─────────────────────────────────┘└─────────────────────────────────┘║
-╚═══════════════════════════════════╝╚══════════════════════════════════════════════════════════════════════╝
+                /\                                     /\                                  /\
+                ||                                     ||                                  ||
+                \/                                     \/                                  \/
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                     Data                                                  ║
+║┌──────────────────────────────────┐┌──────────────────────────────────┐┌─────────────────────────────────┐║
+║|        Elasticsearch             ||               Redis              ||              Postgres           |║
+║|                                  ||                                  ||                                 |║
+║| * Search recommendations.        || * Currency preferences;          || * User information;             |║
+║|                                  ||                                  ||                                 |║
+║|                                  || * Price changes.                 || * Watched products information. |║
+║|                                  ||                                  ||                                 |║
+║└──────────────────────────────────┘└──────────────────────────────────┘└─────────────────────────────────┘║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║                               Scheduler                               ║
+║                                                                       ║
+║ * mailer.js                        * description.js                   ║
+║  Sends email-s using user's         Updates descriptions for needs    ║
+║  currency preferences.              of Elasticsearch engine.          ║
+║                                                                       ║
+║ * price.js                                                            ║
+║  Calls to Onliner API & updates                                       ║
+║  data stored in ES & Redis                                            ║
+║  if price has changed.                                                ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+
 ```
 
 
