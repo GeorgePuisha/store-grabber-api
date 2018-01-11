@@ -48,7 +48,7 @@ module.exports.search = (req, resp) => {
 module.exports.lastPage = (req, resp) => {
     const url = onliner + req.params.query;
     needle.get(url, (err, res) => {
-        if (res.body.page.last) {
+        if (res.body.page) {
             resp.json(res.body.page.last);
         } else {
             resp.json(0);
