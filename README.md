@@ -16,6 +16,31 @@ Clone project to your computer.
 ```
 $ git clone https://github.com/GeorgePuisha/store-grabber-api.git
 ```
+
+## Using Docker
+
+Make sure you have Docker installed. If not, read official [installation guide](https://docs.docker.com/engine/installation/).
+
+To clone `store-grabber-api` Docker image:
+
+```
+$ docker pull georgepuisha/grabber
+```
+
+To display all images:
+
+```
+$ docker images
+```
+
+Create `.env` file and provide it with environmental variables.
+
+Launch Docker image using `.env` file:
+
+```
+$ docker run --env-file=./.env <image ID>
+```
+
 ### Prerequisites
 
 To start with Store Grabber, you should have [Node](https://nodejs.org/en/download/package-manager/) installed. Project guaranteed to work with Node `^8.4.0`. It already has [npm](https://github.com/npm/npm), so your version must be up-to-date.
@@ -55,10 +80,15 @@ To send e-mails automatically, set Gmail account settings using two environmenta
 ... and create `.env` file in root folder for development runs. `.env` file should contain:
 
 ```
-DATABASE_URL="postgres://user:password@host:port/database",
-EMAIL_USER="development@gmail.com",
+DATABASE_URL="postgres://user:password@host:port/database"
+REDIS_URL=redis://h:redis@redis.compute-1.amazonaws.com:23259
+CLOUDAMQP_URL=amqp://cloudamqp:cloudamqp@spider.rmq.cloudamqp.com/cloudamqp
+BONSAI_URL=https://bonsai:bonsai@bonsai.us-east-1.bonsai.net
+EMAIL_USER="development@gmail.com"
 EMAIL_PASSWORD="development"
 ```
+
+All environmental variables could be found after installing appropriate Heroku add-on (visit add-on's dashboard).
 
 Local server is running using Heroku. Server works on port `3000`.
 

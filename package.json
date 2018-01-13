@@ -4,6 +4,7 @@
     "description": "",
     "main": "app.js",
     "scripts": {
+        "docker": "node app.js",
         "start": "heroku local local -p 3000",
         "test": "NODE_ENV=test mocha --exit --timeout 15000"
     },
